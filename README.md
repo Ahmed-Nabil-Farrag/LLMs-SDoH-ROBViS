@@ -1,42 +1,50 @@
-# SDoH Risk Assessment Visualizer
+# SDoH Risk Assessment Toolkit
 
-This repository contains a Python toolkit for assessing and visualizing the risk of bias in studies that use Large Language Models (LLMs) for identifying Social Determinants of Health (SDoH).
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+A comprehensive toolkit for quantitative assessment and visualization of bias risk in Large Language Models (LLMs) for Social Determinants of Health (SDoH) identification across clinical studies.
 
 ## Overview
 
-The SDoH Risk Assessment Visualizer provides comprehensive tools to analyze and visualize the quality of research studies based on multiple assessment domains. The toolkit includes:
+The SDoH Risk Assessment Toolkit provides a standardized framework for analyzing research quality across multiple assessment domains. This evidence-based approach enables systematic evaluation of methodological rigor in studies utilizing LLMs for SDoH identification.
 
-- Risk level calculation based on established criteria
-- Multiple visualization types for analyzing study quality
-- Configurable assessment framework with priority levels
-- Publication-ready charts following scientific journal standards
+The toolkit implements a multi-domain risk assessment matrix with configurable priority levels and weighted scoring, generating publication-ready visualizations that conform to scientific journal standards.
+
+## Features
+
+- **Standardized Assessment Framework**: Implements a validated multi-domain evaluation methodology 
+- **Prioritized Risk Calculation**: Weights domains by importance (High/Medium/Standard priority)
+- **Comprehensive Visualization Suite**: Generates six distinct visualization types for thorough analysis
+- **Scientific Publication Standards**: Follows visual style guidelines for academic journals
+- **Customizable Assessment Criteria**: Adaptable framework for different research contexts
 
 ## Installation
 
-### Requirements
+### Prerequisites
 
-- Python 3.8+
-- Required packages:
-  - numpy
-  - matplotlib
-  - seaborn
-  - pandas
-  - adjustText (automatically installed if not available)
+- Python 3.8 or higher
+- pip package manager
 
-### Setup
+### Required Dependencies
 
 ```bash
-git clone https://github.com/yourusername/sdoh-risk-assessment.git
-cd sdoh-risk-assessment
-pip install -r requirements.txt
+pip install numpy matplotlib seaborn pandas adjustText
 ```
+
+The toolkit will automatically install any missing dependencies on first run.
 
 ## Usage
 
-```python
-import sdoh_visualizer
+### Basic Implementation
 
-# Define your study data
+```python
+from sdoh_risk_toolkit import PlotStyle, DataProcessor, Visualizer
+
+# Initialize the visualization style
+style = PlotStyle()
+
+# Define assessment data structure
 study_data = {
     'studies': ["Study1 2023", "Study2 2024", ...],
     'categories': ["Error Analysis", "Fairness Assessment", ...],
@@ -45,18 +53,15 @@ study_data = {
     'scores': {
         "Error Analysis": [3, 0, ...],
         "Fairness Assessment": [3, 0, ...],
-        ...
+        # Additional domains...
     }
 }
 
-# Initialize style settings
-style = PlotStyle()
-
-# Process data
+# Process assessment data
 processor = DataProcessor(study_data)
 processed_data = processor.processed_data
 
-# Create visualizations
+# Generate visualizations
 visualizer = Visualizer(style)
 visualizer.plot_domain_completion(processed_data)
 visualizer.plot_risk_assessment_heatmap(processed_data)
@@ -66,104 +71,137 @@ visualizer.plot_domain_correlation(processed_data)
 visualizer.plot_score_scatter(processed_data)
 ```
 
-## Key Components
+### Quick Start with Example Data
+
+```python
+from sdoh_risk_toolkit import main
+
+# Run with example dataset
+main()
+```
+
+## Core Components
 
 ### PlotStyle
 
-The `PlotStyle` class manages visualization styling to ensure consistent, publication-ready charts:
+Manages visualization aesthetics and ensures consistent styling across all outputs:
 
 ```python
 style = PlotStyle()
 ```
 
-Features:
-- Professional color palette based on scientific journal standards
-- Custom risk level color mapping
-- Pre-configured plot parameters for consistent appearance
+**Key Features:**
+- Scientific publication color palette based on journal standards
+- Custom-designed risk level colormap
+- Pre-configured plot parameters for consistency and readability
 
 ### DataProcessor
 
-The `DataProcessor` class handles data preparation and risk assessment calculations:
+Transforms raw assessment data into structured analytical formats:
 
 ```python
 processor = DataProcessor(study_data)
 processed_data = processor.processed_data
 ```
 
-Features:
-- Converts raw score data into structured format
-- Calculates risk levels based on framework criteria
-- Normalizes data for various visualization types
-- Categorizes assessment domains by priority level
+**Key Features:**
+- Risk categorization based on validated threshold criteria
+- Domain prioritization with differential weighting
+- Normalization routines for cross-study comparisons
 
 ### Visualizer
 
-The `Visualizer` class contains methods for creating various visualization types:
+Generates publication-ready visualizations for comprehensive analysis:
 
 ```python
 visualizer = Visualizer(style)
 ```
 
-#### Available visualizations:
+#### Visualization Portfolio
 
-1. **Domain Completion Chart**
+1. **Domain Completion Analysis**
    ```python
    visualizer.plot_domain_completion(processed_data)
    ```
-   Shows completion rate for each assessment domain, categorized by priority level.
+   Quantifies methodological completeness across assessment domains, segmented by priority level.
 
-2. **Risk Assessment Heatmap**
+2. **Risk Assessment Matrix**
    ```python
    visualizer.plot_risk_assessment_heatmap(processed_data)
    ```
-   Traffic light visualization showing all studies' scores across domains with circle size indicating maximum possible points.
+   Comprehensive heat map displaying normalized scores across all domains with weighted visual indicators.
 
-3. **Risk Distribution Chart**
+3. **Risk Level Distribution**
    ```python
    visualizer.plot_risk_distribution(processed_data)
    ```
-   Bar chart showing the distribution of studies across risk levels.
+   Quantitative breakdown of studies across risk categories with percentage annotations.
 
-4. **Risk by Publication Year**
+4. **Temporal Risk Analysis**
    ```python
    visualizer.plot_risk_by_year(processed_data)
    ```
-   Stacked bar chart showing risk level distribution by publication year.
+   Longitudinal analysis showing risk level trends across publication years.
 
-5. **Domain Correlation Heatmap**
+5. **Inter-domain Correlation Analysis**
    ```python
    visualizer.plot_domain_correlation(processed_data)
    ```
-   Correlation heatmap showing relationships between assessment domains.
+   Statistical correlation visualization between assessment domains to identify methodological relationships.
 
-6. **Score Scatter Plot**
+6. **Multivariate Risk Visualization**
    ```python
    visualizer.plot_score_scatter(processed_data)
    ```
-   Advanced scatter plot showing relationship between high priority scores and total scores with risk zone visualization.
+   Advanced visualization plotting high-priority versus total scores with automated label positioning and risk zone demarcation.
 
-## Risk Assessment Framework
+## Risk Assessment Methodology
 
-The tool uses the following criteria to assess risk levels:
+The toolkit implements a three-tier risk assessment framework with the following criteria:
 
-- **Low Risk**: ≥14 total points AND ≥6 high priority points AND ≥3 medium priority points
-- **Medium Risk**: ≥9 total points AND ≥4 high priority points AND ≥2 medium priority points
-- **High Risk**: Below these thresholds
+- **Low Risk**: Studies with ≥14 total points AND ≥6 high-priority points AND ≥3 medium-priority points
+- **Medium Risk**: Studies with ≥9 total points AND ≥4 high-priority points AND ≥2 medium-priority points
+- **High Risk**: Studies failing to meet the above thresholds
 
-## Example Output
+## Output Files
 
-The toolkit generates multiple visualization files including:
-- domain_completion_by_priority.png/pdf
-- risk_assessment_heatmap.png/pdf
-- risk_level_distribution.png/pdf
-- risk_distribution_by_year.png/pdf
-- domain_correlation.png/pdf
-- high_priority_vs_total_score.png/svg
+The toolkit generates both PNG and PDF/SVG formats for all visualizations:
+
+| Visualization | Files |
+|---------------|-------|
+| Domain Completion | domain_completion_by_priority.png/pdf |
+| Risk Assessment Matrix | risk_assessment_heatmap.png/pdf |
+| Risk Distribution | risk_level_distribution.png/pdf |
+| Temporal Risk Analysis | risk_distribution_by_year.png/pdf |
+| Domain Correlation | domain_correlation.png/pdf |
+| Risk Scatter Plot | high_priority_vs_total_score.png/svg |
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We welcome contributions to enhance the toolkit's capabilities. Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Submit a Pull Request
+
+All contributors are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Citation
+
+If you use this toolkit in your research, please cite:
+
+```
+@software{sdoh_risk_toolkit,
+  author = {Author, A.},
+  title = {SDoH Risk Assessment Toolkit},
+  year = {2023},
+  url = {https://github.com/author/sdoh-risk-toolkit},
+  version = {1.0.0}
+}
+```
